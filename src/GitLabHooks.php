@@ -2,6 +2,8 @@
 
 namespace Zyan;
 
+use Zyan\Client\DingTalk;
+use Zyan\Client\WeWork;
 use Zyan\Traits\InteractWithBody;
 
 class GitLabHooks extends HttpClient
@@ -11,7 +13,7 @@ class GitLabHooks extends HttpClient
     protected $key;
     protected $body = null;
 
-    public function __construct(string $key = '39b64d67-6d5d-43b7-b7bc-9cc44b57d4fe')
+    public function __construct($config)
     {
         $this->key = $key;
     }
@@ -31,8 +33,16 @@ class GitLabHooks extends HttpClient
         throw new \Exception('No content set');
     }
 
+
     public function sendToWeWork(string $key): string
     {
-        return $this->sendWeWork($key, $this->getBody());
+        $client = new WeWork();
+        return $client->send($key, $this->getBody());
+    }
+
+    public function sendToDingTalk(string $key): string
+    {
+        $client = new DingTalk();
+        return $client->send($key, $this->getBody());
     }
 }
