@@ -21,4 +21,6 @@ trait InteractWithBody
     {
         return $content;
     }
+
+
 }

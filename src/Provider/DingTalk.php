@@ -1,8 +1,9 @@
 <?php
 
-namespace Zyan\Client;
+namespace Zyan\Provider;
 
-use GuzzleHttp\Client;
+use Zyan\Client\HttpClient;
+use Zyan\ProviderInterface;
 
 /**
  * Class DingTalk.
@@ -11,7 +12,7 @@ use GuzzleHttp\Client;
  *
  * @author 读心印 <aa24615@qq.com>
  */
-class DingTalk extends HttpClient implements ClientInterface
+class DingTalk extends HttpClient implements ProviderInterface
 {
     /**
      * 推送到钉钉机器人.

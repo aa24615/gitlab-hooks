@@ -1,6 +1,9 @@
 <?php
 
-namespace Zyan\Client;
+namespace Zyan\Provider;
+
+use Zyan\Client\HttpClient;
+use Zyan\ProviderInterface;
 
 /**
  * Class WeWork.
@@ -9,7 +12,7 @@ namespace Zyan\Client;
  *
  * @author 读心印 <aa24615@qq.com>
  */
-class WeWork extends HttpClient implements ClientInterface
+class WeWork extends HttpClient implements ProviderInterface
 {
     /**
      * 推送到企微机器人.

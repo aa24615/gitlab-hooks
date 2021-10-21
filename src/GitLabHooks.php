@@ -2,8 +2,8 @@
 
 namespace Zyan;
 
-use Zyan\Client\DingTalk;
-use Zyan\Client\WeWork;
+use Zyan\Provider\DingTalk;
+use Zyan\Provider\WeWork;
 use Zyan\Traits\InteractWithBody;
 
 /**
@@ -18,6 +18,12 @@ class GitLabHooks
     use InteractWithBody;
 
     protected $body = null;
+    protected $app = null;
+
+    protected $porovider = [
+        'dingtalk' => DingTalk::class,
+        'wework' => WeWork::class
+    ];
 
     /**
      * GitLabHooks constructor.
@@ -26,6 +32,22 @@ class GitLabHooks
     public function __construct(array $config = [])
     {
         $this->config = $config;
+    }
+
+    public function app(string $name){
+        if(!isset($this->porovider[$name])){
+            throw new \Exception("This app doesn't exist");
+        }
+        $this->app = new $this->porovider[$name];
+        return $this;
+    }
+
+    public function getApp(){
+        if ($this->app) {
+            return $this->app;
+        }
+
+        throw new \Exception('No app set');
     }
 
     /**
@@ -64,14 +86,17 @@ class GitLabHooks
     /**
      * send.
      *
-     * @param
-     *
-     * @return
+     * @return \Psr\Http\Message\ResponseInterface
      *
      * @author 读心印 <aa24615@qq.com>
      */
     public function send(): \Psr\Http\Message\ResponseInterface
     {
+        if (is_null($this->app)) {
+            throw new \Exception('No app set');
+        }
+
+        $this->app->send($key, $this->getBody());
     }
 
     /**
