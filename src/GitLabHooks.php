@@ -6,18 +6,37 @@ use Zyan\Client\DingTalk;
 use Zyan\Client\WeWork;
 use Zyan\Traits\InteractWithBody;
 
-class GitLabHooks extends HttpClient
+/**
+ * Class GitLabHooks.
+ *
+ * @package Zyan
+ *
+ * @author 读心印 <aa24615@qq.com>
+ */
+class GitLabHooks
 {
     use InteractWithBody;
 
-    protected $key;
     protected $body = null;
 
-    public function __construct($config)
+    /**
+     * GitLabHooks constructor.
+     * @param array $config
+     */
+    public function __construct(array $config = [])
     {
-        $this->key = $key;
+        $this->config = $config;
     }
 
+    /**
+     * setBody.
+     *
+     * @param string $content
+     *
+     * @return self
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
     public function setBody(string $content): self
     {
         $this->body = $content;
@@ -25,6 +44,15 @@ class GitLabHooks extends HttpClient
         return $this;
     }
 
+    /**
+     * getBody.
+     *
+     * @return string
+     *
+     * @throws \Exception
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
     public function getBody(): string
     {
         if ($this->body) {
@@ -33,14 +61,44 @@ class GitLabHooks extends HttpClient
         throw new \Exception('No content set');
     }
 
+    /**
+     * send.
+     *
+     * @param
+     *
+     * @return
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function send(): \Psr\Http\Message\ResponseInterface
+    {
+    }
 
-    public function sendToWeWork(string $key): string
+    /**
+     * sendToWeWork.
+     *
+     * @param string $key
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function sendToWeWork(string $key): \Psr\Http\Message\ResponseInterface
     {
         $client = new WeWork();
         return $client->send($key, $this->getBody());
     }
 
-    public function sendToDingTalk(string $key): string
+    /**
+     * sendToWeWork.
+     *
+     * @param string $key
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function sendToDingTalk(string $key): \Psr\Http\Message\ResponseInterface
     {
         $client = new DingTalk();
         return $client->send($key, $this->getBody());

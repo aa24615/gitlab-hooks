@@ -1,24 +1,32 @@
 <?php
 
-
 namespace Zyan\Client;
-
 
 use GuzzleHttp\Client;
 
-class DingTalk implements ClientInterface
+/**
+ * Class DingTalk.
+ *
+ * @package Zyan\Client
+ *
+ * @author 读心印 <aa24615@qq.com>
+ */
+class DingTalk extends HttpClient implements ClientInterface
 {
     /**
      * 推送到钉钉机器人.
      *
      * @param string $key
      * @param string $text
+     * @param bool $isAtAll
+     * @param array $atMobiles
+     * @param array $atUserIds
      *
      * @return string
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function send(string $key, string $text,$isAtAll = false, array $atMobiles = [], array $atUserIds = []): string
+    public function send(string $key, string $text, bool $isAtAll = false, array $atMobiles = [], array $atUserIds = []): \Psr\Http\Message\ResponseInterface
     {
         $data = [
             "msgtype" => "markdown",
@@ -39,6 +47,6 @@ class DingTalk implements ClientInterface
             'body' => \json_encode($data)
         ]);
 
-        return $res->getBody()->getContents();
+        return $res;
     }
 }
