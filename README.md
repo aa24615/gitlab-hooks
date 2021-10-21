@@ -36,11 +36,13 @@ class Test extends Controller
     public function gitlab()
     {
         $gitlab = new GitlabHooks();
+        
         //转发给企业微信群机器人
         $res = $gitlab->sendToWeWork('您的企业微信群机器人key');
         
         //转发给钉钉群机器人
         //$res = $gitlab->sendToDingTalk('您的钉钉群机器人access_token');
+        
         return response()->json($res->getBody()->getContents());
     }
 }
@@ -81,10 +83,12 @@ class Test extends Controller
         ];
         
         $gitlab = new GitlabHooks($config);
+        
         //发送到企业微信群机器人
         $res = $gitlab->app('wework')->send();
+        
         //发送到钉钉群机器人
-        $res = $gitlab->app('dingtalk')->send();
+        //$res = $gitlab->app('dingtalk')->send();
     
         //如果同时发送给多个群,则返顺多个送发结果
         return response()->json($res);
