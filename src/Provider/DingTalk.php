@@ -43,11 +43,7 @@ class DingTalk extends HttpClient implements ProviderInterface
         ];
 
         $url = 'https://oapi.dingtalk.com/robot/send?access_token='.$key;
-        $http = new Client();
-        $res = $http->post($url, [
-            'body' => \json_encode($data)
-        ]);
 
-        return $res;
+        return $this->postJson($url,$data);
     }
 }
