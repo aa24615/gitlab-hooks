@@ -2,9 +2,9 @@
 
 namespace Zyan;
 
+use GuzzleHttp\Psr7\ServerRequest;
 use Zyan\Provider\DingTalk;
 use Zyan\Provider\WeWork;
-use Zyan\Traits\InteractWithBody;
 
 /**
  * Class GitLabHooks.
@@ -15,8 +15,6 @@ use Zyan\Traits\InteractWithBody;
  */
 class GitLabHooks
 {
-    use InteractWithBody;
-
     protected $body = null;
     protected $app = null;
 
@@ -34,15 +32,18 @@ class GitLabHooks
         $this->config = $config;
     }
 
-    public function app(string $name){
-        if(!isset($this->porovider[$name])){
+    public function app(string $name)
+    {
+        if (!isset($this->porovider[$name])) {
             throw new \Exception("This app doesn't exist");
         }
-        $this->app = new $this->porovider[$name];
+
+        $this->app = new $this->porovider[$name]();
         return $this;
     }
 
-    public function getApp(){
+    public function getApp()
+    {
         if ($this->app) {
             return $this->app;
         }
@@ -75,11 +76,20 @@ class GitLabHooks
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function getBody(): string
+    public function getBody(): Body
     {
         if ($this->body) {
-            return $this->getText($this->body);
+            return new Body($this->body);
         }
+
+        $request = ServerRequest::fromGlobals();
+
+        $this->body = $request->getBody()->getContents();
+
+        if ($this->body) {
+            return new Body($this->body);
+        }
+
         throw new \Exception('No content set');
     }
 
@@ -90,13 +100,23 @@ class GitLabHooks
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function send(): \Psr\Http\Message\ResponseInterface
+    public function send()
     {
         if (is_null($this->app)) {
             throw new \Exception('No app set');
         }
 
-        $this->app->send($key, $this->getBody());
+        $body = $this->getBody();
+
+        $rules = new Rules($body, $this->config);
+        $list = $rules->getSnedList();
+
+        $res = [];
+        foreach ($list as $key) {
+            $res[] = $this->app->send($key, $this->getBody()->getContents());
+        }
+
+        return $res;
     }
 
     /**
@@ -111,7 +131,7 @@ class GitLabHooks
     public function sendToWeWork(string $key): \Psr\Http\Message\ResponseInterface
     {
         $client = new WeWork();
-        return $client->send($key, $this->getBody());
+        return $client->send($key, $this->getBody()->getContents());
     }
 
     /**
@@ -126,6 +146,6 @@ class GitLabHooks
     public function sendToDingTalk(string $key): \Psr\Http\Message\ResponseInterface
     {
         $client = new DingTalk();
-        return $client->send($key, $this->getBody());
+        return $client->send($key, $this->getBody()->getContents());
     }
 }
