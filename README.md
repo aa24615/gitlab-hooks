@@ -41,7 +41,7 @@ class Test extends Controller
         
         //转发给钉钉群机器人
         //$res = $gitlab->sendToDingTalk('您的钉钉群机器人access_token');
-        return return response()->json($res->getBody()->getContents());
+        return response()->json($res->getBody()->getContents());
     }
 }
 ```
