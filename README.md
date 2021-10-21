@@ -64,12 +64,18 @@ class Test extends Controller
             //把仓库1跟仓库2发送到群1
             [   
                 'project' => ['仓库1','仓库2'],
-                'key' => '群1_key'
+                'key' => '群1_key',
+                'is_ta_all' => false, //是否@全体成员
+                'at_userids' => [], //需要@成员的userid
+                'at_mobiles' => [], //需要@成员的手机号
             ],
             //把仓库2跟仓库3发送到群2
             [
                 'project' => ['仓库3','仓库4'],
-                'key' => '群2_key'
+                'key' => '群2_key',
+                'is_ta_all' => false, //是否@全体成员
+                'at_userids' => [], //需要@成员的userid
+                'at_mobiles' => [], //需要@成员的手机号
             ],
             //...
         ];
