@@ -75,8 +75,10 @@ class Test extends Controller
         ];
         
         $gitlab = new GitlabHooks($config);
-        //转发给企业微信群机器人
+        //发送到企业微信群机器人
         $res = $gitlab->app('wework')->send();
+        //发送到钉钉群机器人
+        $res = $gitlab->app('dingtalk')->send();
     
         //如果同时发送给多个群,则返顺多个送发结果
         return response()->json($res);
