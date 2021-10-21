@@ -40,7 +40,7 @@ class Test extends Controller
         $res = $gitlab->sendToWeWork('您的企业微信群机器人key');
         
         //转发给钉钉群机器人
-        //$res = $gitlab->sendToDingTalk('您的企业微信群机器人access_token');
+        //$res = $gitlab->sendToDingTalk('您的钉钉群机器人access_token');
         return return response()->json($res->getBody()->getContents());
     }
 }
