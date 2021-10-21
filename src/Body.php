@@ -58,8 +58,8 @@ class Body
         return $this;
     }
 
-    public function sendBody(){
-
+    public function sendBody()
+    {
         $body = $this->getBody();
 
         $event_name = $body->event_type ?? $body->event_name ?? '';

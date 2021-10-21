@@ -100,7 +100,7 @@ class GitLabHooks
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function send():string
+    public function send(): array
     {
         if (is_null($this->app)) {
             throw new \Exception('No app set');
