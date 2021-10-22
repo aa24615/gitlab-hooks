@@ -20,10 +20,36 @@ class GitLabHooksTest extends TestCase
 
         $this->assertInstanceOf(DingTalk::class, $gitlab->getApp());
     }
-    public function test_send_to_wework()
+
+    public function test_send_to_wework_push()
     {
         $gitlab = new GitLabHooks();
-        $res = $gitlab->setBody('{"project":{"name":"test"}}')->sendToWeWork('39b64d67-6d5d-43b7-b7bc-9cc44b57d4fe');
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/push.json'))->sendToWeWork('fface22f-c574-4154-941b-6d128535e156');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
+    }
+
+
+    public function test_send_to_wework_merge_request()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/merge_request.json'))->sendToWeWork('fface22f-c574-4154-941b-6d128535e156');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
+    }
+
+    public function test_send_to_dingtalk_push()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/push.json'))->sendToDingTalk('d1a574564774f9680953aee7df47819dbb0baba29457f7934df883a1d784d99b');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
+    }
+
+    public function test_send_to_dingtalk_merge_request()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/merge_request.json'))->sendToDingTalk('d1a574564774f9680953aee7df47819dbb0baba29457f7934df883a1d784d99b');
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
         $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
     }

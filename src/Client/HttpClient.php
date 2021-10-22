@@ -25,7 +25,11 @@ class HttpClient
      */
     public function postJson(string $url, array $data): \Psr\Http\Message\ResponseInterface
     {
-        $http = new Client();
+        $http = new Client([
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
         $res = $http->post($url, [
             'body' => \json_encode($data)
         ]);

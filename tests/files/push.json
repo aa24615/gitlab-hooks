@@ -1,0 +1,64 @@
+{
+  "object_kind": "push",
+  "event_name": "push",
+  "before": "83630aa6c396cadb0a915777a7be058e004cef40",
+  "after": "baa3d2c051f9ad2a78f3e57e6bcfa2c94a6bb914",
+  "ref": "refs/heads/zyan-1.3.4",
+  "checkout_sha": "baa3d2c051f9ad2a78f3e57e6bcfa2c94a6bb914",
+  "message": null,
+  "user_id": 2,
+  "user_name": "读心印",
+  "user_username": "duxinyin",
+  "user_email": "aa24615@qq.com",
+  "user_avatar": "https://www.gravatar.com/avatar/8ee06875361ab4ab68eb314f6acf5f9b?s=80&d=identicon",
+  "project_id": 14,
+  "project": {
+    "id": 14,
+    "name": "zyan/gitlab-hooks",
+    "description": "",
+    "web_url": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks",
+    "avatar_url": null,
+    "git_ssh_url": "git@127.0.0.1:duxinyin/zyan/gitlab-hooks.git",
+    "git_http_url": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks.git",
+    "namespace": "duxinyin",
+    "visibility_level": 0,
+    "path_with_namespace": "duxinyin/zyan/gitlab-hooks",
+    "default_branch": "test",
+    "ci_config_path": null,
+    "homepage": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks",
+    "url": "git@127.0.0.1:duxinyin/zyan/gitlab-hooks.git",
+    "ssh_url": "git@127.0.0.1:duxinyin/zyan/gitlab-hooks.git",
+    "http_url": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks.git"
+  },
+  "commits": [
+    {
+      "id": "baa3d2c051f9ad2a78f3e57e6bcfa2c94a6bb914",
+      "message": "更新 .styleci.yml",
+      "timestamp": "2021-10-22T15:50:01+00:00",
+      "url": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks/commit/baa3d2c051f9ad2a78f3e57e6bcfa2c94a6bb914",
+      "author": {
+        "name": "读心印",
+        "email": "aa24615@qq.com"
+      },
+      "added": [
+
+      ],
+      "modified": [
+        ".styleci.yml"
+      ],
+      "removed": [
+
+      ]
+    }
+  ],
+  "total_commits_count": 1,
+  "repository": {
+    "name": "zyan/gitlab-hooks",
+    "url": "git@127.0.0.1:duxinyin/zyan/gitlab-hooks.git",
+    "description": "",
+    "homepage": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks",
+    "git_http_url": "http://127.0.0.1/duxinyin/zyan/gitlab-hooks.git",
+    "git_ssh_url": "git@127.0.0.1:duxinyin/zyan/gitlab-hooks.git",
+    "visibility_level": 0
+  }
+}
