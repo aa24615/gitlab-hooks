@@ -59,7 +59,7 @@ class Test extends Controller
         //$res = $gitlab->sendToDingTalk('您的钉钉群机器人access_token');
         
         //快速发送给飞书群机器人
-        //$res = $gitlab->sendToFeiShu('您的钉钉群机器人access_token');
+        //$res = $gitlab->sendToFeiShu('您的飞书群机器人key');
         
         return response()->json($res->getBody()->getContents());
     }
