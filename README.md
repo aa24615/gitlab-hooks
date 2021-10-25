@@ -31,7 +31,7 @@ gitlab消息推送 转发给 企业微信与钉钉
 composer require zyan/gitlab-hooks -vvv
 ```
 
-## 开始
+## 入门
 
 以laravel为例,创建一个新的控制器 路由为 /test/gitlab   
 将url填到gitlab系统钩子
@@ -79,17 +79,17 @@ class Test extends Controller
             [   
                 'project' => ['仓库1','仓库2'],
                 'key' => '群1_key',
-                'is_ta_all' => false, //是否@全体成员
-                'at_userids' => [], //需要@成员的userid
-                'at_mobiles' => [], //需要@成员的手机号
+                'is_at_all' => false, //是否@全体成员 可选
+                'at_mobiles' => [], //需要@成员的手机号 可选
+                'at_userids' => [], //需要@成员的userid 可选
             ],
             //把仓库2跟仓库3发送到群2
             [
                 'project' => ['仓库3','仓库4'],
                 'key' => '群2_key',
-                'is_ta_all' => false, //是否@全体成员
-                'at_userids' => [], //需要@成员的userid
-                'at_mobiles' => [], //需要@成员的手机号
+                'is_at_all' => false, //是否@全体成员 可选
+                'at_mobiles' => [], //需要@成员的手机号 可选
+                'at_userids' => [], //需要@成员的userid 可选
             ],
             //...
         ];

@@ -112,8 +112,14 @@ class GitLabHooks
         $list = $rules->getSnedList();
 
         $res = [];
-        foreach ($list as $key) {
-            $response = $this->app->send($key, $this->getBody()->getContents());
+        foreach ($list as $val) {
+            $response = $this->app->send(
+                $val['key'],
+                $this->getBody()->getContents(),
+                $val['is_at_all'],
+                $val['at_mobiles'],
+                $val['at_userids']
+            );
             $res[] = $response->getBody()->getContents();
         }
 

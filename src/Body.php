@@ -80,7 +80,7 @@ class Body
 
         $count = $body->total_commits_count ?? 0;
 
-        if($count==0){
+        if ($count == 0) {
             return '';
         }
         $text = '共提交'.$count."次     ";

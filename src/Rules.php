@@ -19,7 +19,12 @@ class Rules
         $list = [];
         foreach ($this->config as $val) {
             if (in_array($project, $val['project'])) {
-                $list[] = $val['key'];
+                $list[] = [
+                    'key' => $val['key'],
+                    'is_at_all' => $val['is_at_all'] ?? false,
+                    'at_userids' => $val['at_userids'] ?? [],
+                    'at_mobiles' => $val['at_mobiles'] ?? [],
+                ];
             }
         }
 

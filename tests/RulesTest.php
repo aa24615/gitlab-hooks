@@ -38,10 +38,42 @@ class RulesTest extends TestCase
 
         $body = new Body('{"project":{"name":"git1"}}');
         $rules = new Rules($body, $config);
-        $this->assertSame(['123','456'], $rules->getSnedList());
+        $this->assertSame([
+            [
+                'key' => '123',
+                'is_at_all' => false,
+                'at_userids' => [],
+                'at_mobiles' => []
+            ],
+            [
+                'key' => '456',
+                'is_at_all' => false,
+                'at_userids' => [],
+                'at_mobiles' => []
+            ]
+        ], $rules->getSnedList());
 
         $body = new Body('{"project":{"name":"git2"}}');
         $rules = new Rules($body, $config);
-        $this->assertSame(['123','456','789'], $rules->getSnedList());
+        $this->assertSame([
+            [
+                'key' => '123',
+                'is_at_all' => false,
+                'at_userids' => [],
+                'at_mobiles' => []
+            ],
+            [
+                'key' => '456',
+                'is_at_all' => false,
+                'at_userids' => [],
+                'at_mobiles' => []
+            ],
+            [
+                'key' => '789',
+                'is_at_all' => false,
+                'at_userids' => [],
+                'at_mobiles' => []
+            ],
+        ], $rules->getSnedList());
     }
 }
