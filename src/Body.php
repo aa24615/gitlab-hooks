@@ -126,7 +126,9 @@ class Body
 
         switch ($object_kind) {
             case 'push':
-                $branch = $this->color(end(explode('/', $body->ref ?? '')));
+                $refs = explode('/', $body->ref ?? '');
+                $branch = end($refs);
+                $branch = $this->color($branch);
                 break;
             case 'merge_request':
                 $branch = $this->color($body->object_attributes->source_branch ?? '', '#D200D2')
