@@ -5,6 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase;
 use Zyan\GitlabHooks;
 use Zyan\Provider\DingTalk;
+use Zyan\Provider\FeiShu;
 use Zyan\Provider\WeWork;
 
 class GitLabHooksTest extends TestCase
@@ -19,6 +20,10 @@ class GitLabHooksTest extends TestCase
         $gitlab->app('dingtalk');
 
         $this->assertInstanceOf(DingTalk::class, $gitlab->getApp());
+
+        $gitlab->app('feishu');
+
+        $this->assertInstanceOf(FeiShu::class, $gitlab->getApp());
     }
 
     public function test_send_to_wework_push()
@@ -52,6 +57,22 @@ class GitLabHooksTest extends TestCase
         $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/merge_request.json'))->sendToDingTalk('d1a574564774f9680953aee7df47819dbb0baba29457f7934df883a1d784d99b');
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
         $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
+    }
+
+    public function test_send_to_feishu_push()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/push.json'))->sendToFeiShu('4dfc3077-1d55-4897-8e90-0c08031e5179');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"Extra":null,"StatusCode":0,"StatusMessage":"success"}', $res->getBody()->getContents());
+    }
+
+    public function test_send_to_feishu_merge_request()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/merge_request.json'))->sendToFeiShu('4dfc3077-1d55-4897-8e90-0c08031e5179');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"Extra":null,"StatusCode":0,"StatusMessage":"success"}', $res->getBody()->getContents());
     }
 
     public function test_send()

@@ -16,10 +16,10 @@ class BodyTest extends TestCase
     public function test_get_and_set_project()
     {
         $body = new Body('{"project":{"name":"test"}}');
-        $this->assertSame('test', $body->getProject());
+        $this->assertSame('test', $body->getProjectName());
 
-        $body->setProject('git123');
+        $body->setProjectName('git123');
 
-        $this->assertSame('git123', $body->getProject());
+        $this->assertSame('git123', $body->getProjectName());
     }
 }

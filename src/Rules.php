@@ -15,7 +15,7 @@ class Rules
 
     public function getSnedList(): array
     {
-        $project = $this->body->getProject();
+        $project = $this->body->getProjectName();
         $list = [];
         foreach ($this->config as $val) {
             if (in_array($project, $val['project'])) {

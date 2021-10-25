@@ -4,7 +4,10 @@ namespace Zyan;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Zyan\Provider\DingTalk;
+use Zyan\Provider\FeiShu;
 use Zyan\Provider\WeWork;
+use Zyan\Template\Markdown;
+use Zyan\Template\Text;
 
 /**
  * Class GitLabHooks.
@@ -17,10 +20,18 @@ class GitLabHooks
 {
     protected $body = null;
     protected $app = null;
+    protected $name = null;
 
     protected $porovider = [
         'dingtalk' => DingTalk::class,
-        'wework' => WeWork::class
+        'wework' => WeWork::class,
+        'feishu' => FeiShu::class
+    ];
+
+    protected $templates = [
+        'dingtalk' => Markdown::class,
+        'wework' => Markdown::class,
+        'feishu' => Text::class
     ];
 
     /**
@@ -38,7 +49,9 @@ class GitLabHooks
             throw new \Exception("This app doesn't exist");
         }
 
+        $this->name = $name;
         $this->app = new $this->porovider[$name]();
+
         return $this;
     }
 
@@ -51,6 +64,34 @@ class GitLabHooks
         throw new \Exception('No app set');
     }
 
+    /**
+     * setPorovider.
+     *
+     * @param array $porovider
+     *
+     * @return self
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function setPorovider(array $porovider): self
+    {
+        $this->porovider = $porovider + $this->porovider;
+        return $this;
+    }
+    /**
+     * setTemplate.
+     *
+     * @param array $template
+     *
+     * @return self
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function setTemplate(array $template): self
+    {
+        $this->templates = $template + $this->templates;
+        return $this;
+    }
     /**
      * setBody.
      *
@@ -70,24 +111,25 @@ class GitLabHooks
     /**
      * getBody.
      *
-     * @return string
+     * @return \Zyan\Contract\TemplateInterface
      *
      * @throws \Exception
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function getBody(): Body
+    public function getBody(): \Zyan\Contract\TemplateInterface
     {
-        if ($this->body) {
-            return new Body($this->body);
+        if (!$this->body) {
+            $request = ServerRequest::fromGlobals();
+            $this->body = $request->getBody()->getContents();
         }
 
-        $request = ServerRequest::fromGlobals();
-
-        $this->body = $request->getBody()->getContents();
-
         if ($this->body) {
-            return new Body($this->body);
+            if (isset($this->templates[$this->name])) {
+                return new $this->templates[$this->name]($this->body);
+            }
+
+            return new Markdown($this->body);
         }
 
         throw new \Exception('No content set');
@@ -137,6 +179,7 @@ class GitLabHooks
      */
     public function sendToWeWork(string $key): \Psr\Http\Message\ResponseInterface
     {
+        $this->name = 'wework';
         $client = new WeWork();
         return $client->send($key, $this->getBody()->getContents());
     }
@@ -152,7 +195,24 @@ class GitLabHooks
      */
     public function sendToDingTalk(string $key): \Psr\Http\Message\ResponseInterface
     {
+        $this->name = 'dingtalk';
         $client = new DingTalk();
+        return $client->send($key, $this->getBody()->getContents());
+    }
+
+    /**
+     * sendToFeiShu.
+     *
+     * @param string $key
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function sendToFeiShu(string $key): \Psr\Http\Message\ResponseInterface
+    {
+        $this->name = 'feishu';
+        $client = new FeiShu();
         return $client->send($key, $this->getBody()->getContents());
     }
 }

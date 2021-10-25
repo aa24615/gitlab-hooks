@@ -12,7 +12,7 @@ use Zyan\Contract\ProviderInterface;
  *
  * @author 读心印 <aa24615@qq.com>
  */
-class DingTalk extends HttpClient implements ProviderInterface
+class FeiShu extends HttpClient implements ProviderInterface
 {
     /**
      * 推送到钉钉机器人.
@@ -30,9 +30,8 @@ class DingTalk extends HttpClient implements ProviderInterface
     public function send(string $key, string $text, bool $isAtAll = false, array $atMobiles = [], array $atUserIds = []): \Psr\Http\Message\ResponseInterface
     {
         $data = [
-            "msgtype" => "markdown",
-            "markdown" => [
-                "title" => "gitLab通知",
+            "msg_type" => "text",
+            "content" => [
                 "text" => $text,
             ],
             "at" => [
@@ -42,7 +41,7 @@ class DingTalk extends HttpClient implements ProviderInterface
             ]
         ];
 
-        $url = 'https://oapi.dingtalk.com/robot/send?access_token='.$key;
+        $url = 'https://open.feishu.cn/open-apis/bot/v2/hook/'.$key;
 
         return $this->postJson($url, $data);
     }

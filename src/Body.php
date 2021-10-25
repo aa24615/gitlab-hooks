@@ -33,25 +33,25 @@ class Body
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function getBody()
+    public function getBody(): object
     {
         return $this->body;
     }
 
     /**
-     * getProject.
+     * getProjectName.
      *
      * @return string
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function getProject(): string
+    public function getProjectName(): string
     {
-        return $this->body->project->name ?? '';
+        return $this->getBody()->project->name ?? '';
     }
 
     /**
-     * setProject.
+     * setProjectName.
      *
      * @param string $value
      *
@@ -59,9 +59,9 @@ class Body
      *
      * @author 读心印 <aa24615@qq.com>
      */
-    public function setProject(string $value): self
+    public function setProjectName(string $value): self
     {
-        $this->body->project->name = $value;
+        $this->getBody()->project->name = $value;
         return $this;
     }
 
@@ -74,7 +74,7 @@ class Body
      */
     public function getCommits()
     {
-        $body = $this->body;
+        $body = $this->getBody();
 
         $commits = $body->commits ?? [];
 
@@ -95,9 +95,16 @@ class Body
         return $text;
     }
 
-    public function getState()
+    /**
+     * getState.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getState(): string
     {
-        $body = $this->body;
+        $body = $this->getBody();
 
         $action = $body->object_attributes->action ?? '';
 
@@ -107,7 +114,7 @@ class Body
                 $state = '提交合并';
                 break;
             case 'merge':
-                $state = "完成";
+                $state = "完成合并";
                 break;
         }
 
@@ -115,51 +122,69 @@ class Body
     }
 
 
-
-    public function sendBody()
+    /**
+     * getObjectKind.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getObjectKind(): string
     {
-        $body = $this->getBody();
-
-        $object_kind = $body->object_kind ?? '';
-        $user_name = $body->user->name ?? $body->user_name ?? '';
-        $res_name = $body->project->name ?? '';
-
-        switch ($object_kind) {
-            case 'push':
-                $refs = explode('/', $body->ref ?? '');
-                $branch = end($refs);
-                $branch = $this->color($branch);
-                break;
-            case 'merge_request':
-                $branch = $this->color($body->object_attributes->source_branch ?? '', '#D200D2')
-                    .'→'.
-                    $this->color($body->object_attributes->target_branch ?? '', '#5E005E');
-                break;
-            default:
-                $branch = '';
-                break;
-        }
-
-
-
-        $message = $this->getCommits();
-
-        $content = '## 代码推送通知  ';
-        $content .= "\n> 开发 : " . $user_name . "   ";
-        $content .= "\n> 项目 : " . $res_name . "   ";
-        $content .= "\n> 分支 : " . $branch . "   ";
-        $content .= "\n> 事件 : " . $this->color($object_kind, '#4b0082') . "   ";
-
-        $state = $this->getState();
-        if (!empty($state)) {
-            $content .= "\n> 状态 : " . $this->color($state, '#00CACA') . "   ";
-        }
-
-        $content .= "\n";
-        $content .= "\n " . $message ;
-
-        return $content;
+        return $this->getBody()->object_kind ?? '';
     }
+
+    /**
+     * getUserName.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getUserName(): string
+    {
+        return $this->getBody()->user->name ?? $this->getBody()->user_name ?? '';
+    }
+
+    /**
+     * getSourceBranch.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getSourceBranch(): string
+    {
+        return $this->getBody()->object_attributes->source_branch ?? '';
+    }
+
+    /**
+     * getTargetBranch.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getTargetBranch(): string
+    {
+        return $this->getBody()->object_attributes->target_branch ?? '';
+    }
+
+    /**
+     * getBranch.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getBranch(): string
+    {
+        $refs = explode('/', $this->getBody()->ref ?? '');
+        $branch = end($refs);
+        return $branch;
+    }
+
+
     /**
      * getContents.
      *
@@ -169,21 +194,6 @@ class Body
      */
     public function getContents(): string
     {
-        return $this->sendBody();
-    }
-
-    /**
-     * color.
-     *
-     * @param string $text
-     * @param string $color
-     *
-     * @return string
-     *
-     * @author 读心印 <aa24615@qq.com>
-     */
-    private function color(string $text, $color = '#0066CC'): string
-    {
-        return '<font color="'.$color.'">**'.$text.'**</font>';
+        return $this->getMessage();
     }
 }

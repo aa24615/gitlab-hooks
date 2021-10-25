@@ -3,7 +3,7 @@
 namespace Zyan\Provider;
 
 use Zyan\Client\HttpClient;
-use Zyan\ProviderInterface;
+use Zyan\Contract\ProviderInterface;
 
 /**
  * Class WeWork.
