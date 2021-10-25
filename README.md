@@ -97,6 +97,7 @@ class Test extends Controller
                 'at_mobiles' => [], //需要@成员的手机号 可选
                 'at_userids' => [], //需要@成员的userid 可选
             ],
+            //注意: 飞书群机器人不支持@成员
             //...
         ];
         
