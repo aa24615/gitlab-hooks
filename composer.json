@@ -1,6 +1,6 @@
 {
     "name": "zyan/gitlab-hooks",
-    "keywords": ["gitlab", "企业微信群", "钉钉群", "gitlab推送", "gitlab消息", "gitlab钩子"],
+    "keywords": ["gitlab", "企业微信群", "钉钉群", "gitlab推送", "gitlab消息", "gitlab钩子","飞书群"],
     "description": "gitlab消息推送到企业微信群,钉钉群",
     "license": "MIT",
     "authors": [
