@@ -116,6 +116,9 @@ class Body
             case 'merge':
                 $state = "完成合并";
                 break;
+            case 'close':
+                $state = "关闭合并";
+                break;
         }
 
         return $state;
