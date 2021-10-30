@@ -50,9 +50,10 @@ class Markdown extends Body implements TemplateInterface
             $content .= "\n> 状态 : " . $this->color($state, '#00CACA') . "   ";
         }
 
-        if (!empty($message)) {
+        $commits = $this->getCommits();
+        if (!empty($commits)) {
             $content .= "\n";
-            $content .= "\n " . $message ;
+            $content .= "\n " . $commits ;
         }
 
         return $content;
