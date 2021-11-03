@@ -66,6 +66,20 @@ class Body
     }
 
     /**
+     * getTagName.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getTagName(): string
+    {
+        $refs = explode('/', $this->getBody()->ref ?? '');
+        $tag = end($refs);
+        return $tag;
+    }
+
+    /**
      * getCommits.
      *
      * @return string
@@ -76,20 +90,35 @@ class Body
     {
         $body = $this->getBody();
 
-        $commits = $body->commits ?? [];
 
-        $count = $body->total_commits_count ?? 0;
+        $text = '';
 
-        if ($count == 0) {
-            return '';
-        }
-        $text = '共提交'.$count."次     ";
-        foreach ($commits as $key => $val) {
-            if ($key > 3) {
-                $text .= "\n ...";
+        $objectKind = $this->getObjectKind();
+
+        switch ($objectKind) {
+            case 'push':
+            case 'tag_push':
+
+                $commits = $body->commits ?? [];
+                $count = $body->total_commits_count ?? 0;
+                if ($count > 0) {
+                    $text = '共提交'.$count."次     ";
+                    foreach ($commits as $key => $val) {
+                        if ($key > 3) {
+                            $text .= "\n ...";
+                            break;
+                        }
+                        $text .= "\n ".$val->author->name.":".$val->message;
+                    }
+                }
+
                 break;
-            }
-            $text .= "\n ".$val->author->name.":".$val->message;
+            case 'merge_request':
+                $text .= $body->object_attributes->last_commit->author->name.":".$body->object_attributes->last_commit->message;
+                break;
+            default:
+                $text = '';
+                break;
         }
 
         return $text;

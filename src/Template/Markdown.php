@@ -40,14 +40,15 @@ class Markdown extends Body implements TemplateInterface
         }
 
         $content = '## 代码推送通知  ';
-        $content .= "\n> 开发 : " . $this->getUserName() . "   ";
-        $content .= "\n> 项目 : " . $this->getProjectName() . "   ";
-        $content .= "\n> 分支 : " . $branch . "   ";
-        $content .= "\n> 事件 : " . $this->color($objectKind, '#4b0082') . "   ";
+        $content .= "\n> 开发 : " . $this->color($this->getUserName(), '#FF4500'). "   ";
+        $content .= "\n> 项目 : " . $this->color($this->getProjectName(), '#4169E1') . "   ";
+        $objectKind != 'tag_push' && $content .= "\n> 分支 : " . $branch . "   ";
+        $objectKind == 'tag_push' && $content .= "\n> 标签 : " . $this->getTagName() . "   ";
+        $content .= "\n> 事件 : " . $this->color($objectKind, '#8A2BE2') . "   ";
 
         $state = $this->getState();
         if (!empty($state)) {
-            $content .= "\n> 状态 : " . $this->color($state, '#00CACA') . "   ";
+            $content .= "\n> 状态 : " . $this->color($state, '#008080') . "   ";
         }
 
         $commits = $this->getCommits();

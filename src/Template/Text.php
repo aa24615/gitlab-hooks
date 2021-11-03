@@ -26,7 +26,8 @@ class Text extends Body implements TemplateInterface
         $content .= "\n--------------------------------------";
         $content .= "\n> 开发 : " . $this->getUserName() . "   ";
         $content .= "\n> 项目 : " . $this->getProjectName() . "   ";
-        $content .= "\n> 分支 : " . $branch . "   ";
+        $objectKind != 'tag_push' && $content .= "\n> 分支 : " . $branch . "   ";
+        $objectKind == 'tag_push' && $content .= "\n> 标签 : " . $this->getTagName() . "   ";
         $content .= "\n> 事件 : " . $objectKind . "   ";
 
         $state = $this->getState();
