@@ -34,8 +34,11 @@ class Markdown extends Body implements TemplateInterface
                     .'→'.
                     $this->color($this->getTargetBranch(), '#5E005E');
                 break;
+            case 'repository_update':
+                $branch = $this->color($this->getRepositoryUpdateBranch());
+                break;
             default:
-                $branch = '';
+                $branch = '未知';
                 break;
         }
 

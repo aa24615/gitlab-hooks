@@ -26,14 +26,6 @@ class GitLabHooksTest extends TestCase
         $this->assertInstanceOf(FeiShu::class, $gitlab->getApp());
     }
 
-    public function test_send_to_wework_push()
-    {
-        $gitlab = new GitLabHooks();
-        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/push.json'))->sendToWeWork('fface22f-c574-4154-941b-6d128535e156');
-        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
-        $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
-    }
-
 
     public function test_send_to_wework_merge_request0()
     {
@@ -42,6 +34,7 @@ class GitLabHooksTest extends TestCase
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
         $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
     }
+
 
     public function test_send_to_wework_merge_request1()
     {
@@ -55,6 +48,14 @@ class GitLabHooksTest extends TestCase
     {
         $gitlab = new GitLabHooks();
         $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/merge_request_2.json'))->sendToWeWork('fface22f-c574-4154-941b-6d128535e156');
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
+        $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
+    }
+
+    public function test_send_to_wework_repository_update()
+    {
+        $gitlab = new GitLabHooks();
+        $res = $gitlab->setBody(file_get_contents(__DIR__.'/files/repository_update.json'))->sendToWeWork('fface22f-c574-4154-941b-6d128535e156');
         $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $res);
         $this->assertSame('{"errcode":0,"errmsg":"ok"}', $res->getBody()->getContents());
     }

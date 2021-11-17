@@ -1,0 +1,36 @@
+{
+  "event_name": "repository_update",
+  "user_id": 2,
+  "user_name": "读心印",
+  "user_email": "zengshixiang@yihaohulian.com",
+  "user_avatar": "https://www.gravatar.com/avatar/dd4ef2cf818f8071ef7941cbd9d4d6a7?s=80&d=identicon",
+  "project_id": 6,
+  "project": {
+    "id": 6,
+    "name": "zyan/gitlab-hooks",
+    "description": "",
+    "web_url": "http://127.0.0.1/zengshixiang/openwork",
+    "avatar_url": null,
+    "git_ssh_url": "git@127.0.0.1:zengshixiang/openwork.git",
+    "git_http_url": "http://127.0.0.1/zengshixiang/openwork.git",
+    "namespace": "读心印",
+    "visibility_level": 0,
+    "path_with_namespace": "zengshixiang/openwork",
+    "default_branch": "test",
+    "ci_config_path": "",
+    "homepage": "http://127.0.0.1/zengshixiang/openwork",
+    "url": "git@127.0.0.1:zengshixiang/openwork.git",
+    "ssh_url": "git@127.0.0.1:zengshixiang/openwork.git",
+    "http_url": "http://127.0.0.1/zengshixiang/openwork.git"
+  },
+  "changes": [
+    {
+      "before": "499705ae45516133cc0b1a19b958700c8f8dac5e",
+      "after": "7ab89d1a37681414fd5ba7b884a726689d5f4b56",
+      "ref": "refs/heads/test"
+    }
+  ],
+  "refs": [
+    "refs/heads/test"
+  ]
+}

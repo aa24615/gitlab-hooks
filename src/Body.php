@@ -163,7 +163,7 @@ class Body
      */
     public function getObjectKind(): string
     {
-        return $this->getBody()->object_kind ?? '';
+        return $this->getBody()->object_kind ?? $this->getBody()->event_name ?? '';
     }
 
     /**
@@ -200,6 +200,20 @@ class Body
     public function getTargetBranch(): string
     {
         return $this->getBody()->object_attributes->target_branch ?? '';
+    }
+
+    /**
+     * getRepositoryUpdateBranch.
+     *
+     * @return string
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function getRepositoryUpdateBranch(): string
+    {
+        $refs = explode('/', $this->getBody()->refs[0] ?? '');
+        $branch = end($refs);
+        return $branch;
     }
 
     /**

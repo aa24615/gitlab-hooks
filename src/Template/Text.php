@@ -17,8 +17,11 @@ class Text extends Body implements TemplateInterface
             case 'merge_request':
                 $branch = $this->getSourceBranch() .'→'. $this->getTargetBranch();
                 break;
+            case 'repository_update':
+                $branch = $this->getRepositoryUpdateBranch();
+                break;
             default:
-                $branch = '';
+                $branch = '未知';
                 break;
         }
 
