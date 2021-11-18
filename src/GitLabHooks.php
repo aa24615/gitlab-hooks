@@ -173,7 +173,7 @@ class GitLabHooks
 
         $body = $this->getBody();
 
-        if(in_array($body->getObjectKind(),$this->pushObjectKinds)){
+        if(!in_array($body->getObjectKind(),$this->pushObjectKinds)){
             return [];
         }
 
