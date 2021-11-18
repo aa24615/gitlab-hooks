@@ -34,6 +34,27 @@ class GitLabHooks
         'feishu' => Text::class
     ];
 
+    protected $pushObjectKinds = [
+        'push',
+        'merge_request',
+        'tag_push'
+    ];
+
+    /**
+     * setPushObjectKinds.
+     *
+     * @param array $pushObjectKinds
+     *
+     * @return self
+     *
+     * @author 读心印 <aa24615@qq.com>
+     */
+    public function setPushObjectKinds(array $pushObjectKinds): self
+    {
+        $this->pushObjectKinds = $pushObjectKinds;
+        return $this;
+    }
+
     /**
      * GitLabHooks constructor.
      * @param array $config
@@ -149,6 +170,10 @@ class GitLabHooks
         }
 
         $body = $this->getBody();
+
+        if(in_array($body->getObjectKind(),$this->pushObjectKinds)){
+            return [];
+        }
 
         $rules = new Rules($body, $this->config);
         $list = $rules->getSnedList();

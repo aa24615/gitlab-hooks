@@ -128,5 +128,10 @@ class GitLabHooksTest extends TestCase
         $gitlab = new GitLabHooks($config);
         $res = $gitlab->app('wework')->setBody('{"project":{"name":"git2"}}')->send();
         $this->assertSame(3, count($res));
+
+
+        $gitlab = new GitLabHooks($config);
+        $res = $gitlab->app('wework')->setBody(file_get_contents(__DIR__.'/files/repository_update.json'))->send();
+        $this->assertSame(0, count($res));
     }
 }
