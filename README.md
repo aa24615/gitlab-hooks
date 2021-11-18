@@ -119,7 +119,7 @@ class Test extends Controller
 }
 ```
 
-### 需要被发送的事件
+### 过滤某些事件(白名单)
 
 ```php
 $gitlab = new GitlabHooks($config);
@@ -134,6 +134,7 @@ $gitlab->setPushObjectKinds($pushObjectKinds);
 ```
 
 默认为
+
 ```php
 [
     'push',
@@ -141,7 +142,7 @@ $gitlab->setPushObjectKinds($pushObjectKinds);
     'tag_push'
 ];
 ```
-> 注意: 公对 `send` 方法有效
+> 注意: 仅对 `send` 方法有效
 
 ## 高级
 
