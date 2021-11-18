@@ -119,6 +119,30 @@ class Test extends Controller
 }
 ```
 
+### 需要被发送的事件
+
+```php
+$gitlab = new GitlabHooks($config);
+
+$pushObjectKinds = [
+    'push',
+    'merge_request',
+    'tag_push'
+];
+$gitlab->setPushObjectKinds($pushObjectKinds);
+
+```
+
+默认为
+```php
+[
+    'push',
+    'merge_request',
+    'tag_push'
+];
+```
+> 注意: 公对 `send` 方法有效
+
 ## 高级
 
 ### 自定义提供者

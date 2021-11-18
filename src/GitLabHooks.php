@@ -41,6 +41,15 @@ class GitLabHooks
     ];
 
     /**
+     * GitLabHooks constructor.
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $this->config = $config;
+    }
+
+    /**
      * setPushObjectKinds.
      *
      * @param array $pushObjectKinds
@@ -55,14 +64,7 @@ class GitLabHooks
         return $this;
     }
 
-    /**
-     * GitLabHooks constructor.
-     * @param array $config
-     */
-    public function __construct(array $config = [])
-    {
-        $this->config = $config;
-    }
+
 
     public function app(string $name)
     {
