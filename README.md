@@ -44,7 +44,7 @@ composer require zyan/gitlab-hooks -vvv
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Zyan\GitlabHooks;
+use Zyan\GitLabHooks;
 
 class Test extends Controller
 {
@@ -73,7 +73,7 @@ class Test extends Controller
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Zyan\GitlabHooks;
+use Zyan\GitLabHooks;
 
 class Test extends Controller
 {
@@ -197,7 +197,7 @@ class XxxBot extends HttpClient implements ProviderInterface
 2. 注册自定义提供者
 
 ```php
-use Zyan\GitlabHooks;
+use Zyan\GitLabHooks;
 use Zyan\Template\Markdown; //发送模板
 use Xxx\XxxBot; //你自己写的类
 
@@ -280,7 +280,7 @@ class Text extends Body implements TemplateInterface
 
 
 ```php
-use Zyan\GitlabHooks;
+use Zyan\GitLabHooks;
 use Zyan\Template\Text; //发送模板
 
 //自定义提供者 仅限进阶模式,请配置您的发送信息

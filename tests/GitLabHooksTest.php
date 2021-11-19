@@ -3,7 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use Zyan\GitlabHooks;
+use Zyan\GitLabHooks;
 use Zyan\Provider\DingTalk;
 use Zyan\Provider\FeiShu;
 use Zyan\Provider\WeWork;
