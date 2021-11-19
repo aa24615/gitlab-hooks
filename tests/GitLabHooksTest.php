@@ -123,11 +123,11 @@ class GitLabHooksTest extends TestCase
 
         $gitlab = new GitLabHooks($config);
         $res = $gitlab->app('wework')->setBody('{"project":{"name":"git1"}}')->send();
-        $this->assertSame(2, count($res));
+        $this->assertSame(0, count($res));
 
         $gitlab = new GitLabHooks($config);
         $res = $gitlab->app('wework')->setBody('{"project":{"name":"git2"}}')->send();
-        $this->assertSame(3, count($res));
+        $this->assertSame(0, count($res));
 
 
         $gitlab = new GitLabHooks($config);
